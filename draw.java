@@ -22,6 +22,14 @@ public class draw {
         this.l.add(t);
     }
 
+    public void change_weight(String name, int weight) {
+        for (toy t : this.l) {
+            if (t.name.equals(name)) {
+                t.weight = weight;
+            }
+        }
+    }
+
     public void win(toy t, String name) throws IOException {
             this.fw.write(name + " won a " + t.name);
             this.fw.append('\n');

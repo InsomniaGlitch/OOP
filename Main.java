@@ -2,7 +2,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -27,6 +26,12 @@ public class Main {
                     toy t = new toy(name, amount, weight);
                     dr.insert(t);
                     break;
+                case "Change weight":
+                    System.out.print("Toy name:   ");
+                    String tname = in.nextLine();
+                    System.out.print("New weight:   ");
+                    int new_weight = in.nextInt();
+                    dr.change_weight(tname, new_weight);
             }
             command = in.nextLine();
         }
