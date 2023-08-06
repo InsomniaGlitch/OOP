@@ -1,42 +1,35 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-import fights.fight;
-import players.player;
-
 public class Main {
-    static Scanner in = new Scanner(System.in);
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        ArrayList<toy> list = new ArrayList<toy>();
+        HashMap<toy, String> winlist = new HashMap<toy, String>();
+        FileWriter filewriter = new FileWriter("log.txt", true);
+        draw dr = new draw(list, winlist, filewriter);
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Running toy_draw.exe version 66.6");
         String command = in.nextLine();
-        ArrayList<player> everyone = new ArrayList<player>();
-        while(!command.equals("start")) {
-            if (command.equals("new player")) {
-                everyone.add(create_player());
-            } else {
-                System.out.print('\n');
+        while(!command.equals("Start")) {
+            switch (command) {
+                case "Add a toy":
+                    System.out.print("Name:   ");
+                    String name = in.nextLine();
+                    System.out.print("Amount:   ");
+                    int amount = in.nextInt();
+                    System.out.print("Weight:   ");
+                    int weight = in.nextInt();
+                    toy t = new toy(name, amount, weight);
+                    dr.insert(t);
+                    break;
             }
             command = in.nextLine();
         }
-        System.out.print("The battle starts, and the fighters are: " + everyone.get(0).name);
-        for (int i =1; i < everyone.size(); i++) { System.out.print(", " + everyone.get(i).name); }
-        System.out.print('\n');
-        fight f = new fight(everyone);
-        f.cycle(1);
-    }
-
-    public static player create_player() {
-        player p = new player();
-        System.out.print("Name: ");
-        p.name = in.nextLine();
-        System.out.print("Description: ");
-        p.description = in.nextLine();
-        System.out.print("Health: ");
-        p.max_health = in.nextInt();
-        p.curr_health = p.max_health;
-        System.out.print("Defence: ");
-        p.def = in.nextInt();
-        System.out.print("Speed: ");
-        p.speed = in.nextInt();
-        return p;
+        dr.start();
     }
 }
